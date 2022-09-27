@@ -1,3 +1,3 @@
 # commands
-open https://github.com/Selshiakani28/readme
-#click portfolio file
+open https://github.com/Selshiakani28/readme</br>
+click portfolio file
