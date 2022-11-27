@@ -11,6 +11,7 @@
   - Resists lookup table attack,rainbow attack etc.</br>
   - Hash is irreversible therefore only verification is possible with hash.</br>
 ## Algorithm for negative password generation:</br>
+ `code()`
   i/p<-binary_pass</br>
   o/p<-string</br>
   for i in 1 to 256:</br>
