@@ -1,5 +1,5 @@
 # Authentication by encrypted negative password </br>
-##Aim:</br>
+## Aim:</br>
   - Instead of transmitting the password for authentication,its encrypted hash value is verified.</br>
 ## Steps: </br>
   - Recieve plain password from client.</br>
