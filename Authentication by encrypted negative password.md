@@ -35,6 +35,7 @@
   - By doing so the lookup table attack and rainbow attck is prevented.</br>
   
   ## Code</br>
+  <pre>
 import hashlib
 import math
 def hexaToBin(n):
@@ -239,6 +240,46 @@ for  r in range(len(decrypt_str)):
         col.append(0)
     permut_list.append(col)
 new_order=[]
+for i in range(0,rows):
+     for j in range(0,rows):
+         
+         if(permut[j]==i):
+           #permut_list[i][k]=(str_list[i][j])
+            new_order.append(j)
+            break
+print("\n")
+print("permut",new_order)
+for i in range(0,rows):
+    for j in range(0,rows):
+        permut_list[i][j]=str_list[i][new_order[j]]
+print("\n")
+#print(permut_list)
+edited_list=[]
+for  r in range(len(decrypt_str)):
+    col = []
+    for r1 in range(rows):
+        col.append(0)
+    edited_list.append(col)
+for i in range(0,rows):
+    for j in range(0,rows):
+        if(j<i):
+            edited_list[i][j]=permut_list[i][j]
+        else:
+            if(j==i):
+                edited_list[i][j]=1-int(permut_list[i][j])
+            else:
+                edited_list[i][j]='*'
+
+print("\n decrypted hashvalue")
+#print(edited_list[rows-1])
+decrypt_hash=""
+for ele in edited_list[rows-1]:
+        decrypt_hash+= str(ele)
+ 
+#decrypt_hash.join(edited_list[rows-1])
+print(decrypt_hash)
+print("The hash value from the generated password and the hashvalue decrypted from the value from the authentication table is same therefore user is authenticated")
+</pre>
 
     
      
