@@ -1,0 +1,319 @@
+import numpy as np
+import random
+def matrix_mul(input_matrix,sub_matrix):
+   #result=[[0 for x in range(4)] for y in range(2)]
+   result = np.arange(16).reshape(4,4)
+   result=np.zeros((4,4),dtype=int)
+   
+   for i in range(4):
+   # iterate through columns of Y
+    for j in range(len(sub_matrix[0])):
+       # iterate through rows of Y
+       for k in range(len(sub_matrix)):
+           #result[i][j] =result[i][j]^ input_matrix[i][k] * sub_matrix[k][j]
+
+            res=input_matrix[i][k] and sub_matrix[k][j]
+            #print("res",res)
+            result[i][j]=result[i][j]^res
+            #print(result[i][j])
+            #print("i,j",i,j)
+   #for r in result:
+      #print(r)
+      
+   return result  
+'''def matrix_mul(input_matrix,sub_matrix):
+   result=[[0 for x in range(4)] for y in range(4)]
+   for i in range(4):
+   # iterate through columns of Y
+    for j in range(len(sub_matrix[0])):
+       # iterate through rows of Y
+       for k in range(len(sub_matrix)):
+           #result[i][j] =result[i][j]^ input_matrix[i][k] * sub_matrix[k][j]
+           #result[i][j]=result[i][j]^ (not(input_matrix[i][k]^sub_matrix[k][j]))
+           result[i][j]=result[i][j]^(input_matrix[i][k] and sub_matrix[k][j])
+
+   for r in result:
+      print(r)
+   return result
+   '''
+''' 
+def matrix_mul(input_matrix,sub_matrix):
+  result=[[0 for x in range(4)] for y in range(4)]
+  result=np.dot(input_matrix,sub_matrix)
+  print(result)
+  return(result)
+'''
+def inverse(sub_matrix):
+   inv_matrix = [[0 for x in range(4)] for y in range(4)] 
+   for i in range(0,4):
+     for j in range(0,4):
+         if(i<2 and j<2):
+           inv_matrix[i][j]=sub_matrix[(i+2)][j+2]
+         elif(i<2 and j>=2):
+           inv_matrix[i][j]=sub_matrix[i+2][j-2]
+         elif(i>=2 and j <2):
+            inv_matrix[i][j]=1*sub_matrix[i-2][j+2]
+         else:
+            inv_matrix[i][j]=sub_matrix[i-2][j-2]
+   print("inverse_matrix",inv_matrix)
+   return sub_matrix     
+
+def sub_binary_matrix_construction4(binary_matrix):
+    sub_binary_matrix_two = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_three = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_one = [[0 for x in range(2)] for y in range(2)]
+    sub_binary_matrix_four= [[0 for x in range(2)] for y in range(2)]
+    sub_matrix =[[0 for x in range(4)] for y in range(4)]
+    sub_binary_matrix_three[0][0]=1
+    sub_binary_matrix_three[1][1]=1 
+    for i in range(0,2):
+     for j in range(0,2):
+      sub_binary_matrix_four[i][j]=binary_matrix[i][j]
+      sub_binary_matrix_one[i][j]=binary_matrix[i+2][j+2]
+    for i in range(0,2):
+      for j in range(0,2):
+         sub_binary_matrix_two[i][j]=sub_binary_matrix_three[i][j] | int(not(sub_binary_matrix_four[i][j]^sub_binary_matrix_one[i][j]))
+    
+    print("sub_binary_matrix_two",sub_binary_matrix_two)
+    print("sub_binary_matrix_three",sub_binary_matrix_three)
+    print("sub_binary_matrix_one",sub_binary_matrix_one)
+    print("sub_binary_matrix_four",sub_binary_matrix_four)
+    
+    for i in range(0,4):
+      for j in range(0,4):
+         if(i<2 and j<2):
+           sub_matrix[i][j]=sub_binary_matrix_one[i%2][j%2]
+         elif(i<2 and j>=2):
+           sub_matrix[i][j]=sub_binary_matrix_two[i%2][j%2]
+         elif(i>=2 and j <2):
+            sub_matrix[i][j]=sub_binary_matrix_three[i%2][j%2]
+         else:
+            sub_matrix[i][j]=sub_binary_matrix_four[i%2][j%2]
+    print("sub_binary_matrix",sub_matrix)
+    return sub_matrix  
+
+def sub_binary_matrix_construction3(binary_matrix):
+    sub_binary_matrix_two = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_three = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_one = [[0 for x in range(2)] for y in range(2)]
+    sub_binary_matrix_four= [[0 for x in range(2)] for y in range(2)]
+    sub_matrix =[[0 for x in range(4)] for y in range(4)]
+    sub_binary_matrix_four[0][0]=1
+    sub_binary_matrix_four[1][1]=1 
+    for i in range(0,2):
+     for j in range(0,2):
+      sub_binary_matrix_three[i][j]=binary_matrix[i][j]
+      sub_binary_matrix_two[i][j]=binary_matrix[i+2][j+2]
+    for i in range(0,2):
+      for j in range(0,2):
+         sub_binary_matrix_one[i][j]=sub_binary_matrix_four[i][j] | int(not(sub_binary_matrix_three[i][j]^sub_binary_matrix_two[i][j]))
+    
+    print("sub_binary_matrix_two",sub_binary_matrix_two)
+    print("sub_binary_matrix_three",sub_binary_matrix_three)
+    print("sub_binary_matrix_one",sub_binary_matrix_one)
+    print("sub_binary_matrix_four",sub_binary_matrix_four)
+    
+    for i in range(0,4):
+      for j in range(0,4):
+         if(i<2 and j<2):
+           sub_matrix[i][j]=sub_binary_matrix_one[i%2][j%2]
+         elif(i<2 and j>=2):
+           sub_matrix[i][j]=sub_binary_matrix_two[i%2][j%2]
+         elif(i>=2 and j <2):
+            sub_matrix[i][j]=sub_binary_matrix_three[i%2][j%2]
+         else:
+            sub_matrix[i][j]=sub_binary_matrix_four[i%2][j%2]
+    print("sub_binary_matrix",sub_matrix)
+    return sub_matrix
+    
+
+def sub_binary_matrix_construction2(binary_matrix):
+    sub_binary_matrix_two = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_three = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_one = [[0 for x in range(2)] for y in range(2)]
+    sub_binary_matrix_four= [[0 for x in range(2)] for y in range(2)]
+    sub_matrix =[[0 for x in range(4)] for y in range(4)]
+    sub_binary_matrix_two[0][0]=1
+    sub_binary_matrix_two[1][1]=1 
+    for i in range(0,2):
+     for j in range(0,2):
+      sub_binary_matrix_one[i][j]=binary_matrix[i][j]
+      sub_binary_matrix_four[i][j]=binary_matrix[i+2][j+2]
+    for i in range(0,2):
+      for j in range(0,2):
+         sub_binary_matrix_three[i][j]=sub_binary_matrix_two[i][j] | int(not(sub_binary_matrix_one[i][j]^sub_binary_matrix_four[i][j]))
+    
+    print("sub_binary_matrix_two",sub_binary_matrix_two)
+    print("sub_binary_matrix_three",sub_binary_matrix_three)
+    print("sub_binary_matrix_one",sub_binary_matrix_one)
+    print("sub_binary_matrix_four",sub_binary_matrix_four)
+    
+    for i in range(0,4):
+      for j in range(0,4):
+         if(i<2 and j<2):
+           sub_matrix[i][j]=sub_binary_matrix_one[i%2][j%2]
+         elif(i<2 and j>=2):
+           sub_matrix[i][j]=sub_binary_matrix_two[i%2][j%2]
+         elif(i>=2 and j <2):
+            sub_matrix[i][j]=sub_binary_matrix_three[i%2][j%2]
+         else:
+            sub_matrix[i][j]=sub_binary_matrix_four[i%2][j%2]
+    print("sub_binary_matrix",sub_matrix)
+    return sub_matrix
+  
+def sub_binary_matrix_construction1(binary_matrix):
+    '''sub_binary_matrix_two = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_three = [[0 for x in range(2)] for y in range(2)] 
+    sub_binary_matrix_one = [[0 for x in range(2)] for y in range(2)]
+    sub_binary_matrix_four= [[0 for x in range(2)] for y in range(2)]
+    sub_matrix =[[0 for x in range(4)] for y in range(4)]
+    '''
+    sub_matrix = np.arange(16).reshape(4,4)
+    sub_matrix=np.zeros((4,4),dtype=int)
+    sub_binary_matrix_one = np.arange(4).reshape(2,2)
+    sub__binary_matrix_one=np.zeros((2,2),dtype=int)
+    sub_binary_matrix_two = np.arange(4).reshape(2,2)
+    sub_binary_matrix_two=np.zeros((2,2),dtype=int)
+    sub_binary_matrix_three = np.arange(4).reshape(2,2)
+    sub_binary_matrix_three=np.zeros((2,2),dtype=int)
+    sub_binary_matrix_four = np.arange(4).reshape(2,2)
+    sub_binary_matrix_four=np.zeros((2,2),dtype=int)
+    sub_binary_matrix_one[0][0]=1
+    sub_binary_matrix_one[1][1]=1 
+    for i in range(0,2):
+     for j in range(0,2):
+      
+       sub_binary_matrix_two[0][0]=binary_matrix[0][0]
+       sub_binary_matrix_two[1][1]=binary_matrix[3][3]
+       sub_binary_matrix_two[0][1]=1
+       sub_binary_matrix_two[1][0]=1^(binary_matrix[0][0] and binary_matrix[3][3])
+       
+       sub_binary_matrix_three[0][0]=binary_matrix[0][0]
+       sub_binary_matrix_three[1][1]=binary_matrix[3][3]
+       sub_binary_matrix_three[0][1]=1
+       sub_binary_matrix_three[1][0]=1^(binary_matrix[0][0] and binary_matrix[3][3])
+       
+    for i in range(0,2):
+      for j in range(0,2):
+         sub_binary_matrix_four[i][j]=sub_binary_matrix_one[i][j] ^ (sub_binary_matrix_two[i][j] and sub_binary_matrix_three[i][j])
+    
+    print("sub_binary_matrix_two",sub_binary_matrix_two)
+    print("sub_binary_matrix_three",sub_binary_matrix_three)
+    print("sub_binary_matrix_one",sub_binary_matrix_one)
+    print("sub_binary_matrix_four",sub_binary_matrix_four)
+    
+    for i in range(0,4):
+      for j in range(0,4):
+         if(i<2 and j<2):
+           sub_matrix[i][j]=sub_binary_matrix_one[i%2][j%2]
+         elif(i<2 and j>=2):
+           sub_matrix[i][j]=sub_binary_matrix_two[i%2][j%2]
+         elif(i>=2 and j <2):
+            sub_matrix[i][j]=sub_binary_matrix_three[i%2][j%2]
+         else:
+            sub_matrix[i][j]=sub_binary_matrix_four[i%2][j%2]
+    print("sub_binary_matrix",sub_matrix)
+    return sub_matrix
+    
+    
+    
+    
+def binary_matrix_construction(matrix):
+    binary_matrix = np.arange(16).reshape(4,4)
+    binary_matrix=np.zeros((4,4),dtype=int)
+    for i in range(0,4):
+      for j in range(0,4):
+         binary_matrix[i][j]=matrix[i][j]%2
+    print("binary_matrix",binary_matrix)
+    return binary_matrix
+def matrix_construction(str1):
+    #matrix = [[0 for x in range(4)] for y in range(4)] 
+    matrix = np.arange(16).reshape(4,4)
+    matrix=np.zeros((4,4),dtype=int)
+    print(str1)
+    k=0
+    for i in range(0,4):
+     for j in range(0,4):
+        matrix[i][j]=ord(str1[k])-97
+        k=k+1
+    print("matrix",matrix)
+    return matrix
+
+print("enter the key string")
+str1=input()
+n=len(str1)
+if(n%16 != 0):
+  i=0
+  print((n/16+1)*16-n)
+  while(i<int(n/16+1)*16-n):
+    str1=str1+'z'
+    i=i+1
+    #print(i)
+print(str1)
+print(len(str1))
+p=0
+while p<len(str1)/16:
+  #for i in range(p*16+0,p*16+16):
+  j=0
+  new_str1=""
+  while(j<16):
+      new_str1=new_str1+str1[p*16+j]
+      j=j+1
+  print("new_str1",new_str1)
+  '''
+  matrix = [[0 for x in range(4)] for y in range(4)] 
+  binary_matrix = [[0 for x in range(4)] for y in range(4)] 
+  sub_matrix = [[0 for x in range(4)] for y in range(4)]
+  input_data = [[0 for x in range(4)] for y in range(4)]
+  input_data_int= [[0 for x in range(4)] for y in range(4)]
+  '''
+  matrix = np.arange(16).reshape(4,4)
+  matrix=np.zeros((4,4),dtype=str)
+  #matrix = [[0 for x in range(4)] for y in range(4)] 
+  binary_matrix = np.arange(16).reshape(4,4)
+  binary_matrix=np.zeros((4,4),dtype=int)
+  sub_matrix = np.arange(16).reshape(4,4)
+  sub_matrix=np.zeros((4,4),dtype=int)
+  input_data = np.arange(16).reshape(4,4)
+  input_data=np.zeros((4,4),dtype=str)
+  input_data_int = np.arange(16).reshape(4,4)
+  input_data_int=np.zeros((4,4),dtype=int)
+   
+ 
+  matrix=matrix_construction(new_str1)
+  binary_matrix=binary_matrix_construction(matrix)
+  sub_matrix1=sub_binary_matrix_construction1(binary_matrix)
+  sub_matrix2=sub_binary_matrix_construction2(binary_matrix)
+  sub_matrix3=sub_binary_matrix_construction3(binary_matrix)
+  sub_matrix4=sub_binary_matrix_construction4(binary_matrix)
+  
+  for i in range(0,4):
+   for j in range(0,4):
+      print("enter",i,j,"charelement")
+      input_data[i][j]=input()
+      input_data_int[i][j]=ord(input_data[i][j])
+  print("input_data",input_data_int)
+  k=random.randint(1,1000)%4
+  print("k",k)
+  if k==1:
+    sub_matrix=sub_matrix1
+  elif k==2:
+    sub_matrix=sub_matrix2
+  elif k==3:
+    sub_matrix=sub_matrix3
+  else:
+     sub_matrix=sub_matrix4
+  print("sub_matrix",sub_matrix1)
+  multiplied_matrix=matrix_mul(sub_matrix1,input_data_int)
+  print("multiplied_matrix",multiplied_matrix)
+  inverse_matrix=inverse(sub_matrix1)
+  multiplied_inverse_matrix=matrix_mul(inverse_matrix,multiplied_matrix)
+  print("multiplied_inverse",multiplied_inverse_matrix)
+  p=p+1
+  
+ 
+
+  
+
+           
+         
